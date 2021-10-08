@@ -1,5 +1,5 @@
 import { Menu as MenuIcon } from '@mui/icons-material'
-import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material'
+import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material'
 import React, { Fragment, ReactElement } from 'react'
 
 import { MainLayoutProps } from './Main.layout.props'
@@ -7,7 +7,7 @@ import { MainLayoutProps } from './Main.layout.props'
 export const MainLayout = (props: MainLayoutProps): ReactElement => {
   return (
     <Fragment>
-      <Box sx={{ flexGrow: 1 }}>
+      <div style={{ flexGrow: 1 }}>
         <AppBar position={`static`}>
           <Toolbar>
             <IconButton aria-label={`menu`} color={`inherit`} edge={`start`} size={`large`} sx={{ mr: 2 }}>
@@ -19,7 +19,7 @@ export const MainLayout = (props: MainLayoutProps): ReactElement => {
             <Button color={`inherit`}>{`Login`}</Button>
           </Toolbar>
         </AppBar>
-      </Box>
+      </div>
       <main>{props.children}</main>
     </Fragment>
   )
