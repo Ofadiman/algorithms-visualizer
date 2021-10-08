@@ -1,17 +1,20 @@
 import React, { ReactElement } from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+
+import { TutorialOne } from './pages/TutorialOne.page'
+import { TutorialTwo } from './pages/TutorialTwo.page'
 
 export const App = (): ReactElement => {
   return (
-    <div className={`App`}>
-      <header className={`App-header`}>
-        <p>
-          {`Edit `}
-          <code>{`src/App.tsx`}</code> {`and save to reload.`}
-        </p>
-        <a className={`App-link`} href={`https://reactjs.org`} rel={`noopener noreferrer`} target={`_blank`}>
-          {`Learn React`}
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path={`/tutorial-one`}>
+          <TutorialOne />
+        </Route>
+        <Route path={`/tutorial-two`}>
+          <TutorialTwo />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   )
 }
