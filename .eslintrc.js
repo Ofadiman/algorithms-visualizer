@@ -149,7 +149,7 @@ module.exports = {
     'no-ex-assign': 'error',
     'no-extend-native': 'error',
     'no-extra-bind': 'error',
-    'no-extra-boolean-cast': 'error',
+    'no-extra-boolean-cast': 'off', // Rule does not cooperate well with `@typescript-eslint/strict-boolean-expressions` rule.
     'no-extra-label': 'error',
     'no-extra-parens': 'off', // Rule exists in `@typescript-eslint/eslint-plugin` library.
     'no-extra-semi': 'off', // Rule exists in `@typescript-eslint/eslint-plugin` library.
