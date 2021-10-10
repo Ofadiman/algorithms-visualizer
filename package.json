@@ -57,7 +57,7 @@
     "utility-types": "^3.10.0"
   },
   "scripts": {
-    "build": "react-scripts build",
+    "build": "export DISABLE_ESLINT_PLUGIN=true && export TSC_COMPILE_ON_ERROR=true && react-scripts build",
     "check-types": "tsc --noEmit",
     "lint": "eslint --ext .tsx --ext .ts src/",
     "start": "export DISABLE_ESLINT_PLUGIN=true && export TSC_COMPILE_ON_ERROR=true && react-scripts start",
