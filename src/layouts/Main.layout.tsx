@@ -1,26 +1,21 @@
-import { Menu as MenuIcon } from '@mui/icons-material'
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material'
-import React, { Fragment, ReactElement } from 'react'
+import { AppBar, Button, Toolbar } from '@mui/material'
+import React, { ReactElement } from 'react'
+import { Link } from 'react-router-dom'
 
 import { MainLayoutProps } from './Main.layout.props'
 
 export const MainLayout = (props: MainLayoutProps): ReactElement => {
   return (
-    <Fragment>
-      <div style={{ flexGrow: 1 }}>
-        <AppBar position={`static`}>
-          <Toolbar>
-            <IconButton aria-label={`menu`} color={`inherit`} edge={`start`} size={`large`} sx={{ mr: 2 }}>
-              <MenuIcon />
-            </IconButton>
-            <Typography component={`div`} sx={{ flexGrow: 1 }} variant={`h6`}>
-              {`News`}
-            </Typography>
-            <Button color={`inherit`}>{`Login`}</Button>
-          </Toolbar>
-        </AppBar>
-      </div>
-      <main>{props.children}</main>
-    </Fragment>
+    <div style={{ display: `flex`, flexFlow: `column`, minHeight: `100vh` }}>
+      <AppBar position={`static`}>
+        <Toolbar>
+          <Button color={`inherit`} component={Link} to={`/`}>
+            {`Home`}
+          </Button>
+          {props.toolbarContent}
+        </Toolbar>
+      </AppBar>
+      <main style={{ display: `flex`, flexFlow: `column`, flexGrow: 1 }}>{props.children}</main>
+    </div>
   )
 }

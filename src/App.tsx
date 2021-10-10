@@ -3,6 +3,7 @@ import React, { Fragment, ReactElement } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import { MainLayout } from './layouts/Main.layout'
+import { PathFindingAlgorithms } from './pages/PathFindingAlgorithms/PathFindingAlgorithms.page'
 import { TutorialOne } from './pages/TutorialOne.page'
 import { TutorialTwo } from './pages/TutorialTwo.page'
 
@@ -12,12 +13,15 @@ export const App = (): ReactElement => {
       <CssBaseline />
       <BrowserRouter>
         <Switch>
-          <Route path={`/tutorial-one`}>
+          <Route exact={true} path={`/`}>
+            <PathFindingAlgorithms />
+          </Route>
+          <Route exact={true} path={`/tutorial-one`}>
             <MainLayout>
               <TutorialOne />
             </MainLayout>
           </Route>
-          <Route path={`/tutorial-two`}>
+          <Route exact={true} path={`/tutorial-two`}>
             <MainLayout>
               <TutorialTwo />
             </MainLayout>

@@ -687,7 +687,7 @@ module.exports = {
     'unicorn/no-for-loop': 'error',
     'unicorn/no-hex-escape': 'error',
     'unicorn/no-instanceof-array': 'error',
-    'unicorn/no-keyword-prefix': 'error',
+    'unicorn/no-keyword-prefix': 'off', // Rule does not bring valuable errors.
     'unicorn/no-lonely-if': 'error',
     'unicorn/no-nested-ternary': 'error',
     'unicorn/no-new-array': 'error',
