@@ -12,6 +12,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install dependencies
+          command: yarn --frozen-lockfile
+      - run:
           name: Build project
           command: yarn build
       - run:
