@@ -122,3 +122,6 @@ build
 
 # Jet Brains
 .idea
+
+# Temporary notes
+*.note.*

@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
 
 import { pathFindingSlice } from './pathFinding/pathFinding.slice'
+import { sortingSlice } from './sorting/sorting.slice'
 
 export const sagaMiddleware: SagaMiddleware = createSagaMiddleware()
 
@@ -10,12 +11,10 @@ export const sagaMiddleware: SagaMiddleware = createSagaMiddleware()
 export const store = configureStore({
   devTools: true,
   // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
-  middleware: (getDefaultMiddleware) => [
-    ...getDefaultMiddleware({ serializableCheck: false, thunk: false }),
-    sagaMiddleware
-  ],
+  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware({ thunk: false }), sagaMiddleware],
   reducer: {
-    pathFinding: pathFindingSlice.reducer
+    pathFinding: pathFindingSlice.reducer,
+    sorting: sortingSlice.reducer
   }
 })
 
