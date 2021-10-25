@@ -61,13 +61,13 @@ jobs:
           aws-secret-access-key: STAGING_AWS_SECRET_ACCESS_KEY
       - run:
           name: Clear S3 website bucket
-          command: aws s3 rm s3://algorithms.ofadiman.com --recursive
+          command: aws s3 rm s3://${STAGING_WEBSITE_BUCKET} --recursive
       - run:
           name: Sync S3 bucket with build directory
           command: aws s3 sync build/ s3://${STAGING_WEBSITE_BUCKET} --acl public-read
       - run:
           name: Invalidate Cloud Front
-          command: aws cloudfront create-invalidation --distribution-id ${STAGING_CLOUD_FRONT_DISTRIBUTION_ID}
+          command: aws cloudfront create-invalidation --distribution-id ${STAGING_CLOUD_FRONT_DISTRIBUTION_ID} --paths /*
 
 workflows:
   ci_cd:
