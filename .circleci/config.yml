@@ -1,19 +1,37 @@
 version: 2.1
 
-defaults: &defaults
-  working_directory: ~/repo
-  resource_class: medium
-  machine:
-    image: ubuntu-2004:202107-02
+orbs:
+  aws-cli: circleci/aws-cli@2.0.3
+
+references:
+  defaults: &defaults
+    working_directory: ~/repo
+    resource_class: medium
+
+commands:
+  install_dependencies:
+    steps:
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
 
 jobs:
   continuous_integration:
     <<: *defaults
+    machine:
+      image: ubuntu-2004:202107-02
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: yarn --frozen-lockfile
+      - install_dependencies
       - run:
           name: Build project
           command: yarn build
@@ -26,11 +44,39 @@ jobs:
       - run:
           name: Check types
           command: yarn check-types
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - .
+
+  continuous_deployment:
+    <<: *defaults
+    executor: aws-cli/default
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - aws-cli/setup:
+          aws-access-key-id: STAGING_AWS_ACCESS_KEY_ID
+          aws-region: STAGING_AWS_DEFAULT_REGION
+          aws-secret-access-key: STAGING_AWS_SECRET_ACCESS_KEY
       - run:
-          name: Deploy to S3
-          command: echo "Deployment should be here"
+          name: Clear S3 website bucket
+          command: aws s3 rm s3://algorithms.ofadiman.com --recursive
+      - run:
+          name: Sync S3 bucket with build directory
+          command: aws s3 sync build/ s3://${STAGING_WEBSITE_BUCKET} --acl public-read
+      - run:
+          name: Invalidate Cloud Front
+          command: aws cloudfront create-invalidation --distribution-id ${STAGING_CLOUD_FRONT_DISTRIBUTION_ID}
 
 workflows:
   ci_cd:
     jobs:
       - continuous_integration
+      - continuous_deployment:
+          requires:
+            - continuous_integration
+          filters:
+            branches:
+              only:
+                - main

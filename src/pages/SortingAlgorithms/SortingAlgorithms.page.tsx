@@ -38,7 +38,7 @@ export const SortingAlgorithmsPage = (): ReactElement => {
             {`Sorting algorithms`}
           </Button>
           <Button color={`inherit`} onClick={handleVisualizeClick}>
-            {`Visualize`}
+            {`Visualize after CI deployment`}
           </Button>
         </div>
       }
