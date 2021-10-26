@@ -1,4 +1,12 @@
 terraform {
+  backend "remote" {
+    organization = "Ofadiman"
+
+    workspaces {
+      name = "algorithms-visualizer"
+    }
+  }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
