@@ -2,12 +2,16 @@ import { cloneDeep } from 'lodash-es'
 import { delay, put, select } from 'typed-redux-saga/macro'
 
 import { sortingStateSelector } from '../../selectors/sortingState.selector'
-import { Bar, sortingSlice, SortingState } from '../../sorting.slice'
+import { Bar, sortingSlice, SortingState, SortingStatus } from '../../sorting.slice'
 
 const DELAY: number = 100
 
 export function* bubbleSortSaga(): Generator {
   const state: SortingState = yield* select(sortingStateSelector)
+
+  if (state.status === SortingStatus.Paused) {
+    return
+  }
 
   if (state.index.first === state.bars.length - 1) {
     yield* put(

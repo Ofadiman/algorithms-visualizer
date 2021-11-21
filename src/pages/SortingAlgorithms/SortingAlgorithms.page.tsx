@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AxisDebug } from '../../components/AxisDebug/AxisDebug.component'
 import { Cubeoid } from '../../components/Cubeoid/Cubeoid.component'
 import { MainLayout } from '../../layouts/Main.layout'
-import { Bar, sortingSlice, SortingState } from '../../store/sorting/sorting.slice'
+import { Bar, sortingSlice, SortingState, SortingStatus } from '../../store/sorting/sorting.slice'
 import { AppDispatch, RootState } from '../../store/store'
 
 enum Color {
@@ -26,13 +26,26 @@ export const SortingAlgorithmsPage = (): ReactElement => {
   const dispatch: AppDispatch = useDispatch()
   const bars: Bar[] = useSelector((state: RootState): Bar[] => state.sorting.bars)
   const active: SortingState['active'] = useSelector((state: RootState): SortingState['active'] => state.sorting.active)
-
-  const handleVisualizeClick = (): void => {
-    dispatch(sortingSlice.actions.sortingStart())
-  }
+  const status: SortingStatus = useSelector((state: RootState): SortingState['status'] => state.sorting.status)
 
   const handleBarsRandomization = (): void => {
     dispatch(sortingSlice.actions.randomizeDataset())
+  }
+
+  const handleSortingStop = (): void => {
+    if (status === SortingStatus.Paused) {
+      return
+    }
+
+    dispatch(sortingSlice.actions.sortingPause())
+  }
+
+  const handleSortingStart = (): void => {
+    if (status === SortingStatus.Sorting) {
+      return
+    }
+
+    dispatch(sortingSlice.actions.sortingStart())
   }
 
   useRandomDatasetOnMount(dispatch)
@@ -41,12 +54,23 @@ export const SortingAlgorithmsPage = (): ReactElement => {
     <MainLayout
       toolbarContent={
         <div>
-          <Button color={`inherit`} onClick={handleVisualizeClick}>
-            {`Visualize`}
-          </Button>
           <Button color={`inherit`} onClick={handleBarsRandomization}>
             {`Randomize data`}
           </Button>
+          {status === SortingStatus.Idle ? (
+            <Button color={`inherit`} onClick={handleSortingStart}>
+              {`Visualize`}
+            </Button>
+          ) : (
+            <React.Fragment>
+              <Button color={`inherit`} onClick={handleSortingStop}>
+                {`Pause`}
+              </Button>
+              <Button color={`inherit`} onClick={handleSortingStart}>
+                {`Resume`}
+              </Button>
+            </React.Fragment>
+          )}
         </div>
       }
     >
