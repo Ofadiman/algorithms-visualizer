@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import faker from 'faker'
 import { Draft } from 'immer'
 
 import { SliceName } from '../../enums/SliceName.enum'
@@ -32,23 +33,7 @@ export const INITIAL_SORTING_SLICE_STATE: SortingState = {
     current: ``,
     next: ``
   },
-  bars: [
-    { id: `17-421vr1v3`, value: 17 },
-    { id: `1-21brb3rb`, value: 1 },
-    { id: `16-13rb35h35h1`, value: 16 },
-    { id: `11-13rc3re`, value: 11 },
-    { id: `6-13b3rgh3rg`, value: 6 },
-    { id: `19-13rg3c3r`, value: 19 },
-    { id: `22-13rv13r`, value: 22 },
-    { id: `8-ebdgstjsrb`, value: 8 },
-    { id: `4-setbs`, value: 4 },
-    { id: `14-aghaegaf`, value: 14 },
-    { id: `15-ahrethetaehae`, value: 15 },
-    { id: `11-haethaetha`, value: 11 },
-    { id: `5-cxbvcbxdth`, value: 5 },
-    { id: `14-dfgsergdfdd`, value: 14 },
-    { id: `11-fsgsfdg`, value: 11 }
-  ],
+  bars: [],
   index: {
     first: 0,
     second: 0
@@ -61,6 +46,21 @@ export const sortingSlice = createSlice({
   initialState: INITIAL_SORTING_SLICE_STATE,
   name: SliceName.Sorting,
   reducers: {
+    randomizeDataset: (state: Draft<SortingState>): void => {
+      const dataset: Bar[] = Array.from({ length: 20 })
+        .fill(null)
+        .map((): Bar => {
+          const value: number = faker.datatype.number({ max: 20, min: 1, precision: 1 })
+          const id: string = faker.datatype.uuid()
+
+          return {
+            id,
+            value
+          }
+        })
+
+      state.bars = dataset
+    },
     sortingPause: (state: Draft<SortingState>): void => {
       state.status = SortingStatus.Paused
     },

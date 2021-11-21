@@ -1,7 +1,7 @@
 import { Button } from '@mui/material'
 import { OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { AxisDebug } from '../../components/AxisDebug/AxisDebug.component'
@@ -16,6 +16,12 @@ enum Color {
   Compare = `#e0d50c`
 }
 
+const useRandomDatasetOnMount = (dispatch: AppDispatch): void => {
+  useEffect((): void => {
+    dispatch(sortingSlice.actions.randomizeDataset())
+  }, [dispatch])
+}
+
 export const SortingAlgorithmsPage = (): ReactElement => {
   const dispatch: AppDispatch = useDispatch()
   const bars: Bar[] = useSelector((state: RootState): Bar[] => state.sorting.bars)
@@ -25,12 +31,21 @@ export const SortingAlgorithmsPage = (): ReactElement => {
     dispatch(sortingSlice.actions.sortingStart())
   }
 
+  const handleBarsRandomization = (): void => {
+    dispatch(sortingSlice.actions.randomizeDataset())
+  }
+
+  useRandomDatasetOnMount(dispatch)
+
   return (
     <MainLayout
       toolbarContent={
         <div>
           <Button color={`inherit`} onClick={handleVisualizeClick}>
             {`Visualize`}
+          </Button>
+          <Button color={`inherit`} onClick={handleBarsRandomization}>
+            {`Randomize data`}
           </Button>
         </div>
       }
