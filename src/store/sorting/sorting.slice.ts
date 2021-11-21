@@ -47,7 +47,7 @@ export const sortingSlice = createSlice({
   name: SliceName.Sorting,
   reducers: {
     randomizeDataset: (state: Draft<SortingState>): void => {
-      const dataset: Bar[] = Array.from({ length: 20 })
+      const bars: Bar[] = Array.from({ length: 20 })
         .fill(null)
         .map((): Bar => {
           const value: number = faker.datatype.number({ max: 20, min: 1, precision: 1 })
@@ -59,7 +59,10 @@ export const sortingSlice = createSlice({
           }
         })
 
-      state.bars = dataset
+      state.bars = bars
+      state.active = INITIAL_SORTING_SLICE_STATE.active
+      state.index = INITIAL_SORTING_SLICE_STATE.index
+      state.status = INITIAL_SORTING_SLICE_STATE.status
     },
     sortingPause: (state: Draft<SortingState>): void => {
       state.status = SortingStatus.Paused

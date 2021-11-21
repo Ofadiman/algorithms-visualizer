@@ -4,7 +4,7 @@ import { delay, put, select } from 'typed-redux-saga/macro'
 import { sortingStateSelector } from '../../selectors/sortingState.selector'
 import { Bar, sortingSlice, SortingState, SortingStatus } from '../../sorting.slice'
 
-const DELAY: number = 100
+const DELAY: number = 500
 
 export function* bubbleSortSaga(): Generator {
   const state: SortingState = yield* select(sortingStateSelector)

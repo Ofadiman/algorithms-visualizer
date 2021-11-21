@@ -54,9 +54,11 @@ export const SortingAlgorithmsPage = (): ReactElement => {
     <MainLayout
       toolbarContent={
         <div>
-          <Button color={`inherit`} onClick={handleBarsRandomization}>
-            {`Randomize data`}
-          </Button>
+          {status === SortingStatus.Sorting ? null : (
+            <Button color={`inherit`} onClick={handleBarsRandomization}>
+              {`Randomize data`}
+            </Button>
+          )}
           {status === SortingStatus.Idle ? (
             <Button color={`inherit`} onClick={handleSortingStart}>
               {`Visualize`}
