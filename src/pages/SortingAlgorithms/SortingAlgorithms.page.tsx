@@ -3,11 +3,9 @@ import { OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import React, { ReactElement } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 
 import { AxisDebug } from '../../components/AxisDebug/AxisDebug.component'
 import { Cubeoid } from '../../components/Cubeoid/Cubeoid.component'
-import { RoutePath } from '../../enums/RoutePath.enum'
 import { MainLayout } from '../../layouts/Main.layout'
 import { Bar, sortingSlice, SortingState } from '../../store/sorting/sorting.slice'
 import { AppDispatch, RootState } from '../../store/store'
@@ -31,14 +29,8 @@ export const SortingAlgorithmsPage = (): ReactElement => {
     <MainLayout
       toolbarContent={
         <div>
-          <Button color={`inherit`} component={Link} to={RoutePath.PathFindingAlgorithms}>
-            {`Path finding algorithms`}
-          </Button>
-          <Button color={`inherit`} component={Link} to={RoutePath.SortingAlgorithms}>
-            {`Sorting algorithms`}
-          </Button>
           <Button color={`inherit`} onClick={handleVisualizeClick}>
-            {`Visualize after CI deployment`}
+            {`Visualize`}
           </Button>
         </div>
       }

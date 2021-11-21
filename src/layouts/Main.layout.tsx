@@ -1,20 +1,13 @@
-import { AppBar, Button, Toolbar } from '@mui/material'
+import { AppBar, Toolbar } from '@mui/material'
 import React, { ReactElement } from 'react'
-import { Link } from 'react-router-dom'
 
-import { RoutePath } from '../enums/RoutePath.enum'
 import { MainLayoutProps } from './Main.layout.props'
 
 export const MainLayout = (props: MainLayoutProps): ReactElement => {
   return (
     <div style={{ display: `flex`, flexFlow: `column`, minHeight: `100vh` }}>
       <AppBar position={`static`}>
-        <Toolbar>
-          <Button color={`inherit`} component={Link} to={RoutePath.Home}>
-            {`Home`}
-          </Button>
-          {props.toolbarContent}
-        </Toolbar>
+        <Toolbar>{props.toolbarContent}</Toolbar>
       </AppBar>
       <main style={{ display: `flex`, flexFlow: `column`, flexGrow: 1 }}>{props.children}</main>
     </div>
